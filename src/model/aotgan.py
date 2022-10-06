@@ -100,7 +100,9 @@ class AOTBlock(nn.Module):
             nn.Conv2d(dim, dim, 3, padding=0, dilation=1))
 
     def forward(self, x):
+        # 增加模块到gpu上训练
         out = [self.__getattr__(f'block{str(i).zfill(2)}')(x) for i in range(len(self.rates))]
+        # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         # out = torch.cat(out, 1)
         # out = self.fuse(out)
         # mask = my_layer_norm(self.gate(x))
@@ -110,7 +112,9 @@ class AOTBlock(nn.Module):
         out = self.fuse(out)
         mask = my_layer_norm(self.gate(x))
         b, c, _, _ = mask.shape
-        se = se_block(c)
+        # 修改处
+
+        se = se_block(c).cuda()
         out1 = se(mask)
         mask = torch.sigmoid(out1)
 
