@@ -65,6 +65,7 @@ class AOTBlock(nn.Module):
                 nn.Sequential(
                     nn.ReflectionPad2d(rate),
                     nn.Conv2d(dim, dim//4, 3, padding=0, dilation=rate),
+                    # nn.Conv2d(in_channels=dim,out_channels=dim//4,stride=)
                     nn.ReLU(True)))
         self.fuse = nn.Sequential(
             nn.ReflectionPad2d(1),

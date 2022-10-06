@@ -19,8 +19,8 @@ class se_block(nn.Module):
         y = self.fc(y).view(b, c, 1, 1)
         return x * y
 
-model = se_block(512)
+model = se_block(2)
 print(model)
-inputs = torch.ones([1,512,26,26])
+inputs = torch.ones([1,2,26,26])
 output = model(inputs)
 print(output.shape)
